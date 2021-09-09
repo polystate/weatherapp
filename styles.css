@@ -9,6 +9,11 @@
     --nav-font-size: 1.25rem;
     --nav-height: 2.75rem;
     --search-div-height: 9rem;
+    --panel-line-height: 1.7rem;
+    --biggest-panel-text: 1rem;
+    --panel-text-size: 0.75rem;
+    --main-margin: 10%;
+    --hr-height: 0.09rem;
 }
 
 body{
@@ -19,7 +24,6 @@ body{
 
 nav{
     background-color: #677DB7;
-    /* height: 4em; */
     height: var(--nav-height);
     text-align: center;
 }
@@ -30,7 +34,6 @@ h1{
     color: #454B66;
     color: #322A26;
     color: #191308;
-    /* font-size: 2.25em; */
     font-size: var(--nav-font-size);
     font-family: 'Glory', sans-serif;
     display: flex;
@@ -48,6 +51,7 @@ input[type="text"]{
     font-family: 'Glory', sans-serif;
     font-size: var(--input-font-size);
     border: none;
+    outline: none;
 }
 
 input[type="text"]::selection{
@@ -62,17 +66,131 @@ button{
     margin-top: 22.5%;
     cursor: pointer;
     font-size: var(--input-font-size);
+    font-family: 'Glory', sans-serif;
+    font-weight: 600;
+    outline: none;
 }
+
 
 ::placeholder{
     font-family: 'Glory', sans-serif;
     font-size: var(--input-font-size);
 }
 
-.panel-text{
-    color: white;
-    font-family: 'Glory', sans-serif;
+.weather-image{
+    font-size: 2rem;
+    cursor: pointer;
+    order: -10;
+    margin-top: 0.2rem;
+    line-height: none;
 }
+
+.weather-image:hover{
+    color: orange;
+}
+
+.panel-text{
+    color: rgba(255,255,255,0.7);
+    color: #9CA3DB;
+    font-family: 'Glory', sans-serif;
+    font-weight: 800;
+    margin: 0;
+    padding: 0;
+    font-size: calc(var(--biggest-panel-text)*0.75);
+}
+
+#panel-text-1{
+    /* text-align: center;
+    display: block;
+    padding: 0.4rem 0 0 0; */
+    order: -14;
+    margin-top: 0.5rem;
+    color: white;
+    font-size: var(--biggest-panel-text);
+} 
+
+#panel-text-2{
+    /* text-align: center;
+    margin-top: -1rem;
+    border-bottom: 1px solid white;
+    padding-bottom: 0.5rem; */
+    color: white;
+    order: -13;
+    font-size: var(--biggest-panel-text);
+}
+
+#panel-text-3{
+    font-size: calc(var(--biggest-panel-text)*0.85);
+    order: -12;
+}
+
+#panel-text-4{
+    font-size: calc(var(--biggest-panel-text)*0.75);
+    order: -11;
+    font-style: italic;
+}
+
+#panel-text-5{
+    /* display: inline;
+    margin-left: 1rem; */
+   line-height: var(--panel-line-height);
+}
+
+#panel-text-6{
+    /* display: inline;
+    margin-left: 1rem; */
+    line-height: var(--panel-line-height);
+    
+}
+
+#panel-text-7{
+    /* display: inline-block;
+    margin-left: 1.75rem; */
+    line-height: var(--panel-line-height);
+}
+
+#panel-text-8{
+    /* display: inline;
+    margin-left: 2rem; */
+    line-height: var(--panel-line-height);
+}
+
+#panel-text-9{
+    /* text-align: center;
+    margin-top: 0.1rem; */
+    line-height: var(--panel-line-height);
+}
+
+#panel-text-10{
+    /* text-align: center;
+    margin-top: -1rem;
+    font-size: 0.75rem; */
+    line-height: var(--panel-line-height);
+}
+
+#panel-text-11{
+    /* display: inline-block;
+    margin-top: 2.5rem;
+    margin-left: 2rem;
+    display: none; */
+    line-height: var(--panel-line-height);
+}
+
+#panel-text-12{
+    /* text-align: center;
+    margin-top: 3rem; */
+    line-height: var(--panel-line-height);
+}
+
+.hr-line{
+    width: 100%;
+    order: -9;
+    background-color: orange;
+    height: var(--hr-height);
+    border-radius: 50%;
+    line-height: none;
+}
+
 
 
 /*DIVs*/
@@ -83,7 +201,7 @@ button{
     height: var(--search-div-height);
     text-align: center;
     margin: 0 auto;
-    margin-top: 10%;
+    margin-top: var(--main-margin);
     background-color: #454B66;
     font-family: 'Glory', sans-serif;
 }
@@ -91,25 +209,100 @@ button{
 #weather-panel{
     background-color: #454B66;
     width: 50%;
-    height: calc(var(--search-div-height) * 2);
+    height: calc(var(--search-div-height) * 2.5);
     margin: 0 auto;
-    margin-top: 10%;
+    margin-top: var(--main-margin);
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
+    align-content: center;
+    }
+
+
+
+
+
+
+
+
+
+/*Media Queries* 417-185*/
+
+@media (min-width: 1301px){
+    button{
+        display: block;
+        margin: 0 auto;
+        margin-top: 3.4rem;
+        padding: 17.5px 30px;
+        margin-bottom: 4.8rem;
+    }
+    input[type="text"]{
+        margin-top: 5.2rem;
+    }
+    .weather-image{
+        font-size: 8rem;
+        margin-top: 1.25rem;
+    }
+    :root{
+        --input-font-size: 2.25rem;
+        --nav-font-size: 2.65em;
+        --nav-height: 4.50em;
+        --search-div-height: 23.25rem;
+        --panel-line-height: 3.85rem;
+        --biggest-panel-text: 3.4rem;
+        /* --panel-text-size: 0.75rem; */
+        --main-margin: 10%;
+        --hr-height: 0.09rem;
+    }
 }
 
+@media (min-width: 651px) and (max-width: 1300px){
+    button{
+        display: block;
+        margin: 0 auto;
+        margin-top: 2.5rem;
+    }
+    input[type="text"]{
+        margin-top: 1.8rem;
+    }
+    :root{
+        --input-font-size: 1.25rem;
+        --nav-font-size: 1.65em;
+        --nav-height: 3.50em;
+        --search-div-height: 10.25rem;
+        --panel-line-height: 1.85rem;
+        --biggest-panel-text: 1.4rem;
+        /* --panel-text-size: 0.75rem; */
+        --main-margin: 10%;
+        --hr-height: 0.09rem;
+    }
+}
 
+@media (min-width: 556px) and (max-width: 650px){
+    button{
+        display: block;
+        margin: 0 auto;
+        
+    }
+}
 
-
-
-
-
-
-/*Media Queries*/
-
+@media (min-width: 417px) and (max-width: 650px){
+    button{
+        margin-top: 2rem;
+    }
+    :root{
+        --input-font-size: 1.25rem;
+        --nav-font-size: 1.65em;
+        --nav-height: 3.50em;
+        --search-div-height: 10.25rem;
+        --panel-line-height: 1.85rem;
+        --biggest-panel-text: 1.4rem;
+        /* --panel-text-size: 0.75rem; */
+        --main-margin: 10%;
+        --hr-height: 0.09rem;
+    }
+}
 
 @media (max-width: 505px){
     h1{
@@ -129,30 +322,74 @@ button{
     }
 }
 
-@media (max-width: 411px){
-    h1{
-        font-size: 1.4em;
+@media (max-width: 414px){
+    :root{
+        --input-font-size: 1.25rem;
+        --nav-font-size: 1.65em;
+        --nav-height: 3.50em;
+        --search-div-height: 10.25rem;
+        --panel-line-height: 1.85rem;
+        --biggest-panel-text: 1.4rem;
+        /* --panel-text-size: 0.75rem; */
+        --main-margin: 10%;
+        --hr-height: 0.09rem;
     }
-    nav{
-        height: 3.25em;
+    button{
+        margin-top: 2.15rem;
+    }
+}
+
+@media (max-width: 411px){
+    :root{
+        --input-font-size: 1.25rem;
+        --nav-font-size: 1.65em;
+        --nav-height: 3.50em;
+        --search-div-height: 10.25rem;
+        --panel-line-height: 1.85rem;
+        --biggest-panel-text: 1.4rem;
+        /* --panel-text-size: 0.75rem; */
+        --main-margin: 10%;
+        --hr-height: 0.09rem;
+    }
+    button{
+        margin-top: 2rem;
     }
 }
 
 @media (max-width: 375px){
-    h1{
-        font-size: 1.5em;
+    :root{
+        --input-font-size: 1rem;
+        --nav-font-size: 1.5em;
+        --nav-height: 3.25em;
+        --search-div-height: 9rem;
+        --panel-line-height: 1.7rem;
+        --biggest-panel-text: 1rem;
+        /* --panel-text-size: 0.75rem; */
+        --main-margin: 10%;
+        --hr-height: 0.09rem;
     }
-    nav{
-        height: 3.25em;
+    button{
+        margin-top: 2rem;
     }
 }
 
-@media (max-width: 365px){
+@media (max-width: 360px){
     h1{
         font-size: 1.5em;
     }
     nav{
         height: 3.25em;
+    }
+    :root{
+        --input-font-size: 1rem;
+        --nav-font-size: 1.5em;
+        --nav-height: 3.25em;
+        --search-div-height: 9rem;
+        --panel-line-height: 1.7rem;
+        --biggest-panel-text: 1rem;
+        /* --panel-text-size: 0.75rem; */
+        --main-margin: 10%;
+        --hr-height: 0.09rem;
     }
 }
 
@@ -163,32 +400,55 @@ button{
     nav{
         height: 3em;
     }
-}
-
-@media(max-width: 280px){
     :root{
         --input-font-size: 1rem;
         --nav-font-size: 1.25rem;
         --nav-height: 2.75rem;
+        --search-div-height: 9rem;
+        --panel-line-height: 1.7rem;
+        --biggest-panel-text: 1rem;
+        /* --panel-text-size: 0.75rem; */
+        --main-margin: 10%;
+        --hr-height: 0.09rem;
     }
 }
 
-@media (max-width: 275px){
+@media(max-width: 280px){
     h1{
         font-size: 1.25em;
     }
     nav{
         height: 3em;
     }
+    :root{
+        --input-font-size: 1rem;
+        --nav-font-size: 1.25rem;
+        --nav-height: 2.75rem;
+        --search-div-height: 9rem;
+        --panel-line-height: 1.7rem;
+        --biggest-panel-text: 1rem;
+        /* --panel-text-size: 0.75rem; */
+        --main-margin: 10%;
+        --hr-height: 0.09rem;
+    }
 }
 
+/* @media (max-width: 275px){
+    h1{
+        font-size: 1.25em;
+    }
+    nav{
+        height: 3em;
+    }
+} */
 
 
-@media (max-width: 251px){
+
+/* @media (max-width: 251px){
     h1{
         font-size: 1em;
     }
     nav{
         height: 2.5em;
     }
-}
+} */

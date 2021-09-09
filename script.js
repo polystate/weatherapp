@@ -1,5 +1,7 @@
 const searchInput = document.querySelector("input");
 const searchButton = document.querySelector("button");
+let weatherPanelItems = [];
+let ID = 0;
 
 async function getWeatherData(city){
     const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=407a1e2c2ac239ed7ea61fdde441fd39`, {mode: 'cors'});
@@ -19,15 +21,34 @@ searchButton.addEventListener('click',function(){
 function appendAppData(obj){
     const weatherPanel = document.getElementById("weather-panel");
     weatherPanel.innerHTML = "";
+    // const cityInfo = document.createElement("div");
+    // cityInfo.setAttribute("id","cityInfo");
+    // const tempInfo = document.createElement("div");
+    // tempInfo.setAttribute("id","tempInfo");
+    // const weatherInfo = document.createElement("div");
+    // weatherInfo.setAttribute("id","weatherInfo");
+    // weatherPanel.appendChild(cityInfo);
+    // weatherPanel.appendChild(tempInfo);
+    // weatherPanel.appendChild(weatherInfo);
     appendElement(weatherPanel,searchInput.value);
     appendAllElements(weatherPanel, obj);
+    line = document.createElement("hr");
+    line.setAttribute("class","hr-line");
+    weatherImage = document.createElement("span");
+    weatherImage.setAttribute("class","weather-image");
+    weatherImage.innerHTML = chooseWeatherImage();
+    weatherPanel.appendChild(line);
+    weatherPanel.appendChild(weatherImage);
 }
 
 function appendElement(parent,text){
+    ID++;
     let elem = document.createElement("p");
     elem.setAttribute("class","panel-text");
+    elem.setAttribute("id",`panel-text-${ID}`);
     elem.innerText = text;
     parent.appendChild(elem);
+    weatherPanelItems.push(elem);
 }
 
 function appendAllElements(weatherPanel, obj){
@@ -37,31 +58,74 @@ function appendAllElements(weatherPanel, obj){
             appendElement(weatherPanel,objInfo[props][values]);
         }
     }
+    ID = 0;
 }
 
 
 function selectAppData(obj){
     const appData = {
-        sys: {
-            country: obj.sys.country,
-            sunrise: obj.sys.sunrise,
-            sunset: obj.sys.sunset
-        },
         main: {
-            temp: obj.main.temp,
-            feels_like: obj.main.feels_like,
-            humidity: obj.main.humidity,
-            pressure: obj.main.pressure
-        },
-        weather: {
+            country: obj.sys.country,
             main: obj.weather[0].main,
-            description: obj.weather[0].description
+            description: obj.weather[0].description,
+        },
+        temp: {
+            temp: `Temperature: ${kelvinToFahrenheit(obj.main.temp)}°F`,
+            feels_like: `Feels Like: ${kelvinToFahrenheit(obj.main.feels_like)}°F`,
+            humidity: `Humidity: ${obj.main.humidity}%`,
+            pressure: `Pressure: ${obj.main.pressure}`
+        },
+        sun: {
+            sunrise: `Sunrise: ${convertUnix(obj.sys.sunrise)}`,
+            sunset: `Sunset: ${convertUnix(obj.sys.sunset)}`
         },
         wind: {
-            gust: obj.wind.gust,
-            speed: obj.wind.speed
+            gust: `Wind Gust: ${obj.wind.gust}`,
+            speed: `Wind Speed: ${obj.wind.speed}`
         }
     };
     console.log(appData);
     return appData;
+}
+
+function kelvinToFahrenheit(kelv){
+    fahr = (kelv - 273.15) * 9/5 + 32;
+    return Math.round(fahr);
+}
+
+function fahrenheitToCelsius(fahr){
+    cels = (fahr - 32) * 5/9;
+    return Math.round(cels);
+}
+
+function convertUnix(num){
+    let date = new Date(num*1000);
+    let hours = date.getHours();
+    let minutes = "0" + date.getMinutes();
+    let formattedTime = hours + ':' + minutes.substr(-2);
+    return formattedTime;
+}
+
+function chooseWeatherImage(){
+    const weatherPanel = document.getElementById("weather-panel");
+    const weatherDescription = weatherPanel.childNodes[2].innerText
+    console.log(weatherDescription);
+    const imageMap = {
+        "Rain": `<i class="fas fa-cloud-showers-heavy" style="color:darkblue"></i>`,
+        "Clouds": `<i class="fas fa-cloud" style="color:skyblue"></i>`,
+        "Mist": `<i class="fas fa-cloud-moon" style="color:whitesmoke"></i>`,
+        "Clear": `<i class="fas fa-cloud-sun" style="color:rgb(237,213,158)"></i>`,
+        "Fog": `<i class="fas fa-smog" style="color:lightgrey"></i>`,
+        "Smoke": `<i class="fas fa-fire-alt" style="color:#B73239"></i>`,
+        "Snow": `<i class="fas fa-snowflake" style="color:white"></i>`,
+        "Drizzle": `<i class="fas fa-cloud-rain" style="color:silver"></i>`,
+        "Thunderstorm": `<i class="fas fa-bolt" style="color:yellow"></i>`,
+        "Haze": `<i class="fas fa-wind" style="color:purple"></i>`,
+        "Dust": `<i class="fas fa-feather-alt" style="color:#322A26"></i>`,
+        "Ash": `<i class="fas fa-meteor" style="color:red"></i>`,
+        "Squall": `<i class="fas fa-poo-storm" style="color: brown"></i>`,
+        "Tornado": `<i class="fas fa-dizzy" style="black"></i>`
+    }
+    return imageMap[weatherDescription];
+    console.log(imageMap);
 }
