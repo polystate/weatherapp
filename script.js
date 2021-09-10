@@ -3,7 +3,7 @@ const searchButton = document.querySelector("button");
 let ID = 0;
 
 async function getWeatherData(city){
-    const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=407a1e2c2ac239ed7ea61fdde441fd39`, {mode: 'cors'});
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=407a1e2c2ac239ed7ea61fdde441fd39`, {mode: 'cors'});
     const weatherData = await response.json();
     return weatherData;
 }
