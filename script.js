@@ -1,6 +1,5 @@
 const searchInput = document.querySelector("input");
 const searchButton = document.querySelector("button");
-let weatherPanelItems = [];
 let ID = 0;
 
 async function getWeatherData(city){
@@ -12,24 +11,21 @@ async function getWeatherData(city){
 searchButton.addEventListener('click',function(){
     let userData = getWeatherData(searchInput.value);
     userData.then((value) => {
-        console.log(value);
         let appData = selectAppData(value);
         appendAppData(appData);
-    });
+    }).catch(function(){
+        if(searchInput.value === ""){
+            alert(`No city was entered. Please try again.`);
+        } else {
+            alert(`The city of ${searchInput.value} was not found. Please try again.`);
+        }
+        console.clear();
+    })
 })
 
 function appendAppData(obj){
     const weatherPanel = document.getElementById("weather-panel");
     weatherPanel.innerHTML = "";
-    // const cityInfo = document.createElement("div");
-    // cityInfo.setAttribute("id","cityInfo");
-    // const tempInfo = document.createElement("div");
-    // tempInfo.setAttribute("id","tempInfo");
-    // const weatherInfo = document.createElement("div");
-    // weatherInfo.setAttribute("id","weatherInfo");
-    // weatherPanel.appendChild(cityInfo);
-    // weatherPanel.appendChild(tempInfo);
-    // weatherPanel.appendChild(weatherInfo);
     appendElement(weatherPanel,searchInput.value);
     appendAllElements(weatherPanel, obj);
     line = document.createElement("hr");
@@ -48,7 +44,6 @@ function appendElement(parent,text){
     elem.setAttribute("id",`panel-text-${ID}`);
     elem.innerText = text;
     parent.appendChild(elem);
-    weatherPanelItems.push(elem);
 }
 
 function appendAllElements(weatherPanel, obj){
@@ -70,8 +65,8 @@ function selectAppData(obj){
             description: obj.weather[0].description,
         },
         temp: {
-            temp: `Temperature: ${kelvinToFahrenheit(obj.main.temp)}°F`,
-            feels_like: `Feels Like: ${kelvinToFahrenheit(obj.main.feels_like)}°F`,
+            temp: `Temperature: ${kelvinToFahrenheit(obj.main.temp)}° F`,
+            feels_like: `Feels Like: ${kelvinToFahrenheit(obj.main.feels_like)}° F`,
             humidity: `Humidity: ${obj.main.humidity}%`,
             pressure: `Pressure: ${obj.main.pressure}`
         },
@@ -80,11 +75,15 @@ function selectAppData(obj){
             sunset: `Sunset: ${convertUnix(obj.sys.sunset)}`
         },
         wind: {
-            gust: `Wind Gust: ${obj.wind.gust}`,
-            speed: `Wind Speed: ${obj.wind.speed}`
+            gust: `${obj.wind.gust}`,
+            speed: `Wind Speed: ${obj.wind.speed} km`
         }
     };
-    console.log(appData);
+    if(appData.wind.gust == "undefined"){
+        appData.wind.gust = "Wind Gust: 0 km";
+    } else {
+        appData.wind.gust = `Wind Gust: ${obj.wind.gust} km`;
+    }
     return appData;
 }
 
@@ -109,7 +108,6 @@ function convertUnix(num){
 function chooseWeatherImage(){
     const weatherPanel = document.getElementById("weather-panel");
     const weatherDescription = weatherPanel.childNodes[2].innerText
-    console.log(weatherDescription);
     const imageMap = {
         "Rain": `<i class="fas fa-cloud-showers-heavy" style="color:darkblue"></i>`,
         "Clouds": `<i class="fas fa-cloud" style="color:skyblue"></i>`,
@@ -127,5 +125,4 @@ function chooseWeatherImage(){
         "Tornado": `<i class="fas fa-dizzy" style="black"></i>`
     }
     return imageMap[weatherDescription];
-    console.log(imageMap);
 }
