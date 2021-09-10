@@ -1,3 +1,5 @@
+/*Complete*/
+
 const searchInput = document.querySelector("input");
 const searchButton = document.querySelector("button");
 let ID = 0;
